@@ -1,4 +1,5 @@
 pub mod nxp;
+pub mod rp2040;
 
 use std::{
     sync::Arc,

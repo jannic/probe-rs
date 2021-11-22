@@ -3,6 +3,7 @@ use probe_rs_target::{Architecture, ChipFamily};
 use super::{Core, MemoryRegion, RawFlashAlgorithm, RegistryError, TargetDescriptionSource};
 
 use crate::architecture::arm::sequences::nxp::LPC55S69;
+use crate::architecture::arm::sequences::rp2040::RP2040;
 use crate::architecture::arm::sequences::ArmDebugSequence;
 use crate::architecture::riscv::sequences::esp32c3::ESP32C3;
 use crate::architecture::riscv::sequences::{DefaultRiscvSequence, RiscvDebugSequence};
@@ -95,6 +96,9 @@ impl Target {
         } else if chip.name.starts_with("esp32c3") {
             log::warn!("Using custom sequence for ESP32c3");
             debug_sequence = DebugSequence::Riscv(ESP32C3::create());
+        } else if chip.name == "RP2040" {
+            log::warn!("Using custom sequence for RP2040");
+            debug_sequence = DebugSequence::Arm(RP2040::create());
         }
 
         Ok(Target {
